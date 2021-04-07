@@ -323,10 +323,10 @@ class AssetFactory
         }
 
         if (false !== strpos($input, '*')) {
-            return $this->createGlobAsset($input, $root, $options['vars']);
+            return $this->createGlobAsset($input, $options['vars'], $root);
         }
 
-        return $this->createFileAsset($input, $root, $path, $options['vars']);
+        return $this->createFileAsset($input, $options['vars'], $root, $path);
     }
 
     protected function createAssetCollection(array $assets = array(), array $options = array())
@@ -348,12 +348,12 @@ class AssetFactory
         return new HttpAsset($sourceUrl, array(), false, $vars);
     }
 
-    protected function createGlobAsset($glob, $root = null, $vars)
+    protected function createGlobAsset($glob, $vars, $root = null)
     {
         return new GlobAsset($glob, array(), $root, $vars);
     }
 
-    protected function createFileAsset($source, $root = null, $path = null, $vars)
+    protected function createFileAsset($source, $vars, $root = null, $path = null)
     {
         return new FileAsset($source, array(), $root, $path, $vars);
     }

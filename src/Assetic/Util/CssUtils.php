@@ -104,7 +104,11 @@ abstract class CssUtils
     public static function filterCommentless($content, $callback)
     {
         $result = '';
-        foreach (preg_split(static::REGEX_COMMENTS, $content, -1, PREG_SPLIT_DELIM_CAPTURE) as $part) {
+        $parts = preg_split(static::REGEX_COMMENTS, $content, -1, PREG_SPLIT_DELIM_CAPTURE);
+        if (false === $parts) {
+            $parts = [$content];
+        }
+        foreach ($parts as $part) {
             if (!preg_match(static::REGEX_COMMENTS, $part, $match) || $part != $match[0]) {
                 $part = call_user_func($callback, $part);
             }
